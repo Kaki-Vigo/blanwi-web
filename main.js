@@ -16,8 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }, observerOptions);
 
-        // Observar elementos para animar
-        const elementsToAnimate = document.querySelectorAll('.about-content, .feature-card, .phone-mockup, .cta-content');
+        // NUEVO: añadimos step-card y differentiators
+        const elementsToAnimate = document.querySelectorAll(
+            '.about-content, .feature-card, .phone-mockup, .cta-content, .step-card, .differentiators'
+        );
+
         elementsToAnimate.forEach(el => {
             el.classList.add('fade-in');
             observer.observe(el);
@@ -30,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
-                // Efecto de ripple
                 const ripple = document.createElement('span');
                 const rect = button.getBoundingClientRect();
                 const size = Math.max(rect.width, rect.height);
@@ -110,27 +112,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Contador animado (si necesitas mostrar números)
-    function animateCounters() {
-        const counters = document.querySelectorAll('.counter');
-        
-        counters.forEach(counter => {
-            const target = parseInt(counter.getAttribute('data-target'));
-            const increment = target / 200;
-            let current = 0;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                counter.textContent = Math.floor(current);
-                
-                if (current >= target) {
-                    counter.textContent = target;
-                    clearInterval(timer);
-                }
-            }, 10);
-        });
-    }
-
     // Efecto de typing en el hero title (opcional)
     function initTypingEffect() {
         const title = document.querySelector('.hero-title');
@@ -156,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeroAnimation();
     initParallax();
     initFeatureCardAnimations();
+    initTypingEffect(); // ← activado
 
     // CSS adicional para efectos de ripple
     const style = document.createElement('style');
@@ -186,15 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
-});
-
-// Función para manejar el resize de la ventana
-window.addEventListener('resize', function() {
-    // Reajustar animaciones si es necesario
-    clearTimeout(window.resizeTimer);
-    window.resizeTimer = setTimeout(function() {
-        // Código para reajustar elementos si es necesario
-    }, 250);
 });
 
 // Preloader simple (opcional)
